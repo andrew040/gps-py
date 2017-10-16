@@ -17,7 +17,7 @@ key.close()
 
 file = open('/var/www/html/testfile'+str(last_key)+'.txt','w')
 
-file.write('<gpx xmlns="http://www.topografix.com/GPX/1/1" xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" creator="Oregon 400t" version="1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd">\n')
+file.write('<gpx xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">\n')
 file.write('  <trk>\n')
 file.write('    <name>GPX Track</name>\n')
 file.write('    <trkseg>\n')
@@ -50,34 +50,19 @@ while True:
 
        londeg = gprmcdata[5][:3]
        londec = gprmcdata[5][3:]
-       lon = float(londeg)+float(londec)/60
+       if gprmcdata[6]=='W':
+        londeg = float(londeg) * -1
+        lon = float(londeg)-float(londec)/60
+       else:
+        lon = float(londeg)+float(londec)/60
 
-#       lat = float(gprmcdata[3])/100
-#       lon = float(gprmcdata[5])/100
        file.write('      <trkpt lat="'+str(lat)+'" lon="'+str(lon)+'">\n')
        file.write('        <ele>'+gpggadata[9]+'</ele>\n')
        file.write('        <time>'+atomtime+'</time>\n')
        file.write('        <hdop>'+gpggadata[8]+'</hdop>\n')
        file.write('        <sat>'+gpggadata[7]+'</sat>\n')
        file.write('        <geoidheight>'+gpggadata[11]+'</geoidheight>\n')
-
        file.write('      </trkpt>\n')
-
-
-
-#       file.write(gprmcdata[1][:6] + ',') # UTC time without trailing zero's
-#       file.write(gprmcdata[2] + ',') # Fix valid
-#       file.write(gprmcdata[3] + ',') # latitude
-#       file.write(gprmcdata[4] + ',') # north/south
-#       file.write(gprmcdata[5] + ',') # longitude
-#       file.write(gprmcdata[6] + ',') # east/west
-#       file.write(gprmcdata[7] + ',') # speed
-#       file.write(gprmcdata[8] + ',') # true track
-#       file.write(gprmcdata[9] + ',') # date
-#       file.write(gpggadata[7] + ',') # number of satellites
-#       file.write(gpggadata[8] + ',') # hdop
-#       file.write(gpggadata[9]) # altitude
-#       file.write('\r\n')
        previous_time = gpggatime
     file.close()
 ser.close()             # close port
