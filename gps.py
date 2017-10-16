@@ -6,8 +6,17 @@ ser = serial.Serial('/dev/ttyAMA0')  # open serial port
 datavalid = 0
 previous_time = 0
 
+key = open('key','r')
+last_key = int(key.read())
+last_key += 1
+key.close()
+
+key = open('key','w')
+key.write(str(last_key))
+key.close()
+
 while True:
-    file = open('/var/www/html/testfile.txt','a') 
+    file = open('/var/www/html/testfile'+str(last_key)+'.txt','a') 
     line = ser.readline() 
 
     if line[:6] == '$GPRMC':
@@ -23,8 +32,8 @@ while True:
     if datavalid > 4:
      if gprmctime == gpggatime:
       if gpggatime != previous_time:
-       print gprmcdata[9] + ' - ' + gprmcdata[1][:6]
-       file.write(gprmcdata[1] + ',') # UTC time
+       #print gprmcdata[9] + ' - ' + gprmcdata[1][:6]
+       file.write(gprmcdata[1][:6] + ',') # UTC time without trailing zero's
        file.write(gprmcdata[2] + ',') # Fix valid
        file.write(gprmcdata[3] + ',') # latitude
        file.write(gprmcdata[4] + ',') # north/south
