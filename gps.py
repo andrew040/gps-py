@@ -51,7 +51,7 @@ while True:
 	if datavalid > 4:
 		if gprmctime == gpggatime:
 			if gpggatime != previous_time:
-				if gprmcdata[2] == 'A'
+				if gprmcdata[2] == 'A':
 					#convert UTC time to Atom time
 					atomtime = '20'+gprmcdata[9][4:6]+'-'+gprmcdata[9][2:4]+'-'+gprmcdata[9][0:2]+'T'
 					atomtime = atomtime + gprmcdata[1][:2]+':'+ gprmcdata[1][2:4]+':'+ gprmcdata[1][4:6]+'Z'
@@ -66,10 +66,10 @@ while True:
 
 					#if longitude is western, longitude is negative
 					if gprmcdata[6]=='W':
-					londeg = float(londeg) * -1
-					lon = float(londeg)-float(londec)/60
+						londeg = float(londeg) * -1
+						lon = float(londeg)-float(londec)/60
 					else:
-					lon = float(londeg)+float(londec)/60
+						lon = float(londeg)+float(londec)/60
 
 					#write trackpoint
 					file.write('		<trkpt lat="'+str(lat)+'" lon="'+str(lon)+'">\n')
