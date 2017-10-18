@@ -8,7 +8,7 @@ datavalid = 0
 previous_time = 0
 
 #find last file ID
-key = open('key','r')
+key = open('/home/ap/repos/gps-py/key','r')
 last_key = int(key.read())
 key.close()
 
@@ -20,7 +20,7 @@ file.write('</gpx>\n')
 
 #increase file ID
 last_key += 1
-key = open('key','w')
+key = open('/home/ap/repos/gps-py/key','w')
 key.write(str(last_key))
 key.close()
 
