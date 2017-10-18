@@ -72,7 +72,7 @@ while True:
 						lon = float(londeg)+float(londec)/60
 
 					#write trackpoint
-					file.write('		<trkpt lat="'+str(lat)+'" lon="'+str(lon)+'">\n')
+					file.write('		<trkpt lat="'+str(round(lat,8))+'" lon="'+str(round(lon,8))+'">\n')
 					file.write('		  <ele>'+gpggadata[9]+'</ele>\n')
 					file.write('		  <time>'+atomtime+'</time>\n')
 					file.write('		  <hdop>'+gpggadata[8]+'</hdop>\n')
