@@ -1,8 +1,11 @@
 #!/usr/bin/env python
 import serial
 import string
+import Adafruit_BMP.BMP085 as BMP085
+
 
 #init
+sensor = BMP085.BMP085(mode=BMP085.BMP085_ULTRAHIGHRES) # initialize BMP
 ser = serial.Serial('/dev/ttyAMA0')  # open serial port
 datavalid = 0
 previous_time = 0
@@ -72,9 +75,10 @@ while True:
 						lon = float(londeg)+float(londec)/60
 
 					#write trackpoint
-					file.write('		<trkpt lat="'+str(round(lat,8))+'" lon="'+str(round(lon,8))+'">\n')
-					file.write('		  <ele>'+gpggadata[9]+'</ele>\n')
+					file.write('		<trkpt lat="'+str(round(lat,6))+'" lon="'+str(round(lon,6))+'">\n')
+					file.write('		  <ele>{0:0.2f}</ele>\n'.format(sensor.read_altitude()))
 					file.write('		  <time>'+atomtime+'</time>\n')
+                                        file.write('		  <cmt>GPS alt: '+gpggadata[9]+'m</cmt>\n')
 					file.write('		  <hdop>'+gpggadata[8]+'</hdop>\n')
 					file.write('		  <sat>'+gpggadata[7]+'</sat>\n')
 					file.write('		</trkpt>\n')
