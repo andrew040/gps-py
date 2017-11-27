@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 import serial
 import string
-import Adafruit_BMP.BMP085 as BMP085
+import BMP280 as BMP280
 
 
 #init
-sensor = BMP085.BMP085(mode=BMP085.BMP085_ULTRAHIGHRES) # initialize BMP
+sensor = BMP280.BMP280(mode=BMP280.BMP280_ULTRAHIGHRES) # initialize BMP
 ser = serial.Serial('/dev/ttyAMA0')  # open serial port
 datavalid = 0
 previous_time = 0
